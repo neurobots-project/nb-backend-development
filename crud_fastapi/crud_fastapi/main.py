@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
+import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -20,11 +21,25 @@ class Paciente(BaseModel):
     cidade: str
     estado: str
 
-# Rota para criar um paciente (CREATE)
+# Rota para criar um paciente (POST)
 @app.post("/pacientes/", status_code=status.HTTP_201_CREATED)
 def criar_paciente(paciente: Paciente):
     doc_ref = db.collection("pacientes").add(paciente.model_dump())
     return {"mensagem": "Paciente criado com sucesso", "id": doc_ref.id}
+
+# Rota para adicionar as clínicas ao banco de dados (POST)
+@app.post("/clinicas/add", status_code=status.HTTP_201_CREATED)
+def adicionar_clinicas():
+    url = "https://api-clinics.rj.r.appspot.com/all"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        clinicas_data = response.json()
+        for clinica in clinicas_data:
+            doc_ref = db.collection("clinicas").add(clinica)
+        return {"mensagem": "Clínicas adicionadas com sucesso"}
+    else:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro ao obter dados da API das clínicas")
 
 # Rota para obter todos os pacientes (GET)
 @app.get("/pacientes/", response_model=List[Paciente])
@@ -46,7 +61,7 @@ def obter_paciente(paciente_id: str):
     paciente_data = doc.to_dict()
     return Paciente(**paciente_data)
 
-# Rota para atualizar um paciente por ID (UPDATE)
+# Rota para atualizar um paciente por ID (PUT)
 @app.put("/pacientes/{paciente_id}", response_model=Paciente)
 def atualizar_paciente(paciente_id: str, paciente: Paciente):
     doc_ref = db.collection("pacientes").document(paciente_id)
