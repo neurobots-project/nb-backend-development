@@ -21,11 +21,26 @@ class Paciente(BaseModel):
     cidade: str
     estado: str
 
+class Clinica(BaseModel):
+    bairro: str
+    cep: str
+    cidade: str
+    clinica: str
+    contato: str
+    email: str
+    endereco_atendimento: str
+    estado: str
+    lat: str
+    long: str
+    pessoas: str
+    profissao: str
+    regiao: str
+
 # Rota para criar um paciente (POST)
-@app.post("/pacientes/", status_code=status.HTTP_201_CREATED)
+@app.post("/pacientes/add", status_code=status.HTTP_201_CREATED)
 def criar_paciente(paciente: Paciente):
     doc_ref = db.collection("pacientes").add(paciente.model_dump())
-    return {"mensagem": "Paciente criado com sucesso", "id": doc_ref.id}
+    return {"mensagem": "Paciente criado com sucesso"}
 
 # Rota para adicionar as clínicas ao banco de dados (POST)
 @app.post("/clinicas/add", status_code=status.HTTP_201_CREATED)
@@ -51,6 +66,16 @@ def obter_pacientes():
         pacientes.append(Paciente(**paciente_data))
     return pacientes
 
+# Rota para obter todas as clínicas (GET)
+@app.get("/clinicas/", response_model=List[Clinica])
+def obter_clinicas():
+    clinicas = []
+    docs = db.collection("clinicas").stream()
+    for doc in docs:
+        clinica_data = doc.to_dict()
+        clinicas.append(Clinica(**clinica_data))
+    return clinicas
+
 # Rota para obter um paciente por ID (GET)
 @app.get("/pacientes/{paciente_id}", response_model=Paciente)
 def obter_paciente(paciente_id: str):
@@ -60,6 +85,16 @@ def obter_paciente(paciente_id: str):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Paciente não encontrado")
     paciente_data = doc.to_dict()
     return Paciente(**paciente_data)
+
+# Rota para obter uma clínica por ID (GET)
+@app.get("/clinicas/{clinica_id}", response_model=Clinica)
+def obter_clinica(clinica_id: str):
+    doc_ref = db.collection("clinicas").document(clinica_id)
+    doc = doc_ref.get()
+    if not doc.exists:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Clínica não encontrada")
+    clinica_data = doc.to_dict()
+    return Clinica(**clinica_data)
 
 # Rota para atualizar um paciente por ID (PUT)
 @app.put("/pacientes/{paciente_id}", response_model=Paciente)
