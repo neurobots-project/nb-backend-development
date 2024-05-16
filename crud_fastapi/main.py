@@ -36,11 +36,11 @@ class Clinica(BaseModel):
     profissao: str
     regiao: str
 
-# Rota para criar um paciente (POST)
+# Rota para criar um paciente (CREATE)
 @app.post("/pacientes/add", status_code=status.HTTP_201_CREATED)
 def criar_paciente(paciente: Paciente):
     doc_ref = db.collection("pacientes").add(paciente.model_dump())
-    return {"mensagem": "Paciente criado com sucesso"}
+    return {"mensagem": "Paciente criado com sucesso", "id": doc_ref[1].id}
 
 # Rota para adicionar as clínicas ao banco de dados (POST)
 @app.post("/clinicas/add", status_code=status.HTTP_201_CREATED)

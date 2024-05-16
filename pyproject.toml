@@ -6,7 +6,7 @@ authors = ["Lohhan <lohhang05@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 fastapi = "^0.110.3"
 uvicorn = "^0.29.0"
 requests = "^2.31.0"
@@ -15,6 +15,9 @@ firebase-admin = "^6.5.0"
 
 [tool.taskipy.tasks]
 run = "uvicorn crud_fastapi.main:app --reload"
+
+[tool.pytest.ini.options]
+pythonpath = "."
 
 [tool.poetry.group.dev.dependencies]
 taskipy = "^1.12.2"
