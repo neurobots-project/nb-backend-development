@@ -20,6 +20,9 @@ class Paciente(BaseModel):
     endereco: str
     cidade: str
     estado: str
+    historicoAVCFamilia: str
+    outraCondicao: str
+    valorInvestir: int
 
 class Clinica(BaseModel):
     bairro: str
@@ -39,7 +42,7 @@ class Clinica(BaseModel):
 # Rota para criar um paciente (CREATE)
 @app.post("/pacientes/add", status_code=status.HTTP_201_CREATED)
 def criar_paciente(paciente: Paciente):
-    doc_ref = db.collection("pacientes").add(paciente.model_dump())
+    doc_ref = db.collection("pacientes").add(paciente.dict())
     return {"mensagem": "Paciente criado com sucesso", "id": doc_ref[1].id}
 
 # Rota para adicionar as clínicas ao banco de dados (POST)

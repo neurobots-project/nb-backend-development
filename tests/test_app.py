@@ -13,7 +13,10 @@ def test_criar_paciente():
         "cep": "52362-220",
         "endereco": "Rua numero dois",
         "cidade": "Recife",
-        "estado": "PE"
+        "estado": "PE",
+        "historicoAVCFamilia": "Não",
+        "outraCondicao": "Nenhuma",
+        "valorInvestir": 2500
     }
     response = client.post("/pacientes/add", json=paciente_data)
     
@@ -34,7 +37,9 @@ def test_criar_paciente():
     assert paciente_response["endereco"] == paciente_data["endereco"]
     assert paciente_response["cidade"] == paciente_data["cidade"]
     assert paciente_response["estado"] == paciente_data["estado"]
-
+    assert paciente_response["historicoAVCFamilia"] == paciente_data["historicoAVCFamilia"]
+    assert paciente_response["outraCondicao"] == paciente_data["outraCondicao"]
+    assert paciente_response["valorInvestir"] == paciente_data["valorInvestir"]
 
 def test_obter_pacientes():
     response = client.get("/pacientes/")
