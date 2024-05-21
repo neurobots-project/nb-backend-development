@@ -22,14 +22,14 @@ Este projeto implementa uma API RESTful utilizando FastAPI para gerenciar dados 
    pip install -r requirements.txt
 2. **Configure a chave da API do firebase:**
    
-    Insira dentro da pasta _crud_fastapi_ o arquivo secret.json.
+    Insira dentro da pasta `crud_fastapi` o arquivo `secret.json`.
 3. **Execute a aplicação no terminal:**
    ```bash
    uvicorn crud_fastapi.main:app --reload
 
 4. **Acesse a API:**
 
-    A API estará disponível em http://127.0.0.1:8000/docs
+    A API estará disponível em `http://127.0.0.1:8000/docs`
 
 ### Arquitetura:
   * **FastAPI:** Framework Python para a construção de APIs RESTful.
