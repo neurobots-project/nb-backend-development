@@ -1,5 +1,6 @@
 from typing import List
 from fastapi import FastAPI, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 import firebase_admin
@@ -10,19 +11,25 @@ firebase_admin.initialize_app(cred)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+                   )
+
 db = firestore.client()
 
 class Paciente(BaseModel):
-    nome: str
+    name: str
     email: str
-    telefone: str
-    cep: str
-    endereco: str
-    cidade: str
-    estado: str
-    historicoAVCFamilia: str
-    outraCondicao: str
-    valorInvestir: int
+    whatsapp: str
+    city: str
+    state: str
+    hasAvc: str
+    hasAnotherCondition: str
+    investmentAmount: str
 
 class Clinica(BaseModel):
     bairro: str
