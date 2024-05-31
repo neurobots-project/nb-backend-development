@@ -9,7 +9,7 @@ from firebase_admin import credentials, firestore
 cred = credentials.Certificate("crud_fastapi/secret.json")
 firebase_admin.initialize_app(cred)
 
-app = FastAPI()
+app = FastAPI(docs_url=None)
 
 app.add_middleware(
     CORSMiddleware,
