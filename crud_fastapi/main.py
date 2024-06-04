@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
+import uvicorn
 
 cred = credentials.Certificate("crud_fastapi/secret.json")
 firebase_admin.initialize_app(cred)
@@ -121,3 +122,5 @@ def deletar_paciente(paciente_id: str):
     return {"mensagem": "Paciente deletado com sucesso"}
 
 # uvicorn crud_fastapi.main:app --reload
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
