@@ -28,6 +28,10 @@ Este projeto implementa uma API RESTful utilizando FastAPI para gerenciar dados 
 * **Tratamento de Erros:** Implementa o tratamento de erros HTTP para lidar com casos como dados inválidos ou recursos não encontrados.
 * **Documentação:** Utiliza a documentação automática do FastAPI para gerar documentação interativa da API.
 
+### Deploy no Google Cloud:
+
+A API está implantada no serviço Google Cloud, proporcionando alta disponibilidade, escalabilidade e integração perfeita com o Firestore. Esta implementação garante que a API possa lidar com um grande volume de solicitações de forma eficiente e segura.
+
 ### Instalação e Execução:
 1. **Instale as dependências:**
    ```bash
@@ -35,9 +39,6 @@ Este projeto implementa uma API RESTful utilizando FastAPI para gerenciar dados 
 2. **Execute a aplicação no terminal:**
    ```bash
    uvicorn crud_fastapi.main:app --reload
-3. **Acesse a API:**
-
-    A API estará disponível em `http://127.0.0.1:8000/docs`
 
 ### Arquitetura:
   * **FastAPI:** Framework Python para a construção de APIs RESTful.
