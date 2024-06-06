@@ -4,7 +4,7 @@ Este projeto implementa uma API RESTful utilizando FastAPI para gerenciar dados 
 
 ### Como funciona?:
 
-![Diagrama em branco](https://github.com/neurobots-project/nb-backend-development/assets/110141875/078d136d-fa20-43cb-ade5-7baf096e63bc)
+![SolucaoDesenvolvida-Diagrama](https://github.com/neurobots-project/nb-backend-development/assets/110141875/7b7d64c8-8f27-470f-941f-645de7da4bbc)
 
 * **Frontend:**
    * O frontend da API é desenvolvido com React. O frontend se comunica com a API através de requisições HTTP.
